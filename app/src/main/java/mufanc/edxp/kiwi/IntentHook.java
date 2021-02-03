@@ -4,7 +4,6 @@ import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.Application;
 import android.content.ComponentName;
-import android.content.ContextWrapper;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.res.AssetManager;
@@ -128,10 +127,11 @@ public class IntentHook implements IXposedHookZygoteInit, IXposedHookLoadPackage
 //                                }
 //                            });
                                 Log.i("KiwiLogcat", "Calling package: " + componentName.getPackageName());
-                                String data = intent.getDataString();
-                                if (data != null) {
-                                    Log.i("KiwiLogcat", "Data: " + data);
-                                }
+                                Log.i("KiwiLogcat", "Intent: " + intent.toUri(0));
+//                                String data = intent.getDataString();
+//                                if (data != null) {
+//                                    Log.i("KiwiLogcat", "Data: " + data);
+//                                }
                                 param.setResult(0);
                             } else {
                                 Log.i("KiwiLogcat", "Accepted: " + intent.toString());
@@ -162,7 +162,7 @@ public class IntentHook implements IXposedHookZygoteInit, IXposedHookLoadPackage
             Array.set(assetsArray, 0, apkAssets);
             setApkAssets.invoke(assets, assetsArray, false);
 
-            // 获取资源对象并生成控件
+            // 获取资源对象
             Resources resources = new Resources(
                     assets,
                     application.getResources().getDisplayMetrics(),
